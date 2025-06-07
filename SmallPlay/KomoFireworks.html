@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>魔魔叩叩永远在一起，爱你</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    // 设置画布
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // 辅助函数：生成 [min, max] 之间的随机数
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    /* -------------------------------
+       烟花效果部分
+    ------------------------------- */
+
+    // 爆炸粒子类（烟花爆炸后的粒子）
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = random(1, 3);
+        this.color = color;
+        this.speed = random(1, 5);
+        this.angle = random(0, Math.PI * 2);
+        this.alpha = 1;
+        this.friction = 0.98;
+        this.gravity = 0.1;
+      }
+      update() {
+        this.speed *= this.friction;
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed + this.gravity;
+        this.alpha -= 0.01;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // 烟花上升球类
+    class Firework {
+      constructor() {
+        this.x = random(0, canvas.width);
+        this.y = canvas.height;
+        this.targetY = random(0, canvas.height / 2);
+        this.speed = random(4, 7);
+        this.exploded = false;
+        this.particles = [];
+        this.color = `hsl(${Math.floor(random(0, 360))}, 100%, 50%)`;
+      }
+      update() {
+        if (!this.exploded) {
+          this.y -= this.speed;
+          if (this.y <= this.targetY) {
+            this.explode();
+          }
+        }
+        this.particles.forEach(p => p.update());
+        this.particles = this.particles.filter(p => p.alpha > 0);
+      }
+      explode() {
+        this.exploded = true;
+        const count = 50;
+        for (let i = 0; i < count; i++) {
+          this.particles.push(new Particle(this.x, this.y, this.color));
+        }
+      }
+      draw() {
+        if (!this.exploded) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+        this.particles.forEach(p => p.draw());
+      }
+    }
+
+    let fireworks = [];
+
+    /* -------------------------------
+       文字粒子效果部分
+    ------------------------------- */
+
+    // 文字粒子类：粒子从随机散布状态过渡到目标位置形成文字
+    class TextParticle {
+      constructor(targetX, targetY) {
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.scatterX = Math.random() * canvas.width;
+        this.scatterY = Math.random() * canvas.height;
+        this.x = this.scatterX;
+        this.y = this.scatterY;
+        this.size = 2;
+      }
+      // 根据 progress（0～1）线性插值更新位置
+      update(progress) {
+        this.x = this.scatterX * (1 - progress) + this.targetX * progress;
+        this.y = this.scatterY * (1 - progress) + this.targetY * progress;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+      }
+      // 每个周期重新生成散布位置
+      resetScatter() {
+        this.scatterX = Math.random() * canvas.width;
+        this.scatterY = Math.random() * canvas.height;
+      }
+    }
+
+    let textParticles = [];
+    // 定义文字动画各阶段时长（毫秒）
+    const T1 = 2000;  // 聚集阶段：（progress从0到1）
+    const T2 = 3000;  // 保持阶段：（progress保持1）
+    const T3 = 2000;  // 散开阶段：（progress从1到0）
+    const textCycleDuration = T1 + T2 + T3; // 总周期：7000ms
+    let startTime = Date.now();
+
+    // 利用离屏画布绘制分行文字，并采样生成目标位置
+    function createTextParticles(text) {
+      let offCanvas = document.createElement("canvas");
+      offCanvas.width = canvas.width;
+      offCanvas.height = canvas.height;
+      let offCtx = offCanvas.getContext("2d");
+      offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+      // 根据画布尺寸设定字体大小
+      let fontSize = Math.min(canvas.width, canvas.height) / 10;
+      offCtx.font = `bold ${fontSize}px sans-serif`;
+      offCtx.textAlign = "center";
+      offCtx.textBaseline = "middle";
+      offCtx.fillStyle = "white";
+      
+      // 分行绘制文字，支持换行符 "\n"
+      let lines = text.split("\n");
+      let lineHeight = fontSize * 1.2;
+      let totalHeight = lines.length * lineHeight;
+      let startY = (offCanvas.height - totalHeight) / 2 + lineHeight / 2;
+      for (let i = 0; i < lines.length; i++) {
+        offCtx.fillText(lines[i], offCanvas.width / 2, startY + i * lineHeight);
+      }
+      
+      // 采样离屏画布中的文字像素
+      let imageData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
+      let data = imageData.data;
+      textParticles = [];
+      let gap = 6; // 采样间隔
+      for (let y = 0; y < offCanvas.height; y += gap) {
+        for (let x = 0; x < offCanvas.width; x += gap) {
+          let index = (y * offCanvas.width + x) * 4;
+          if (data[index + 3] > 128) {
+            textParticles.push(new TextParticle(x, y));
+          }
+        }
+      }
+    }
+
+    // 使用分行文字（用 "\n" 分割）
+    createTextParticles("魔魔叩叩\n永远\n在一起");
+
+    /* -------------------------------
+       主动画循环
+    ------------------------------- */
+
+    function animate() {
+      // 使用半透明黑色填充产生尾迹效果
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 更新烟花效果
+      if (Math.random() < 0.05) {
+        fireworks.push(new Firework());
+      }
+      fireworks.forEach(fw => {
+        fw.update();
+        fw.draw();
+      });
+      fireworks = fireworks.filter(fw => !fw.exploded || fw.particles.length > 0);
+
+      // 计算文字动画进度
+      let elapsed = Date.now() - startTime;
+      let cycleTime = elapsed % textCycleDuration;
+      let progress;
+      if (cycleTime < T1) {
+        // 聚集阶段：从 0 到 1
+        progress = cycleTime / T1;
+      } else if (cycleTime < T1 + T2) {
+        // 保持阶段：progress = 1
+        progress = 1;
+      } else {
+        // 散开阶段：从 1 到 0
+        progress = 1 - ((cycleTime - (T1 + T2)) / T3);
+      }
+      // 在周期交界时，重置所有文字粒子的散布位置
+      if (cycleTime < 100 || Math.abs(cycleTime - (T1 + T2)) < 100) {
+        textParticles.forEach(tp => tp.resetScatter());
+      }
+      // 更新并绘制文字粒子
+      textParticles.forEach(tp => {
+        tp.update(progress);
+        tp.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // 监听窗口大小变化，更新画布尺寸并重新生成文字粒子
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createTextParticles("魔魔叩叩\n永远\n在一起");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔叩宝宝的模型选择页面</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background-color: #f4f4f8;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .col {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .model-header {
+            background: linear-gradient(135deg, #74AAFF, #7293d0);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .model-header a {
+            color: white;
+            text-decoration: none;
+        }
+        .model-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .model-content img {
+            max-width: 100%; /* Ensure image doesn't exceed column width */
+            height: auto; /* Maintain aspect ratio */
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .warning {
+            background-color: #fffde7;
+            border-left: 4px solid #ffd54f;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: bold;
+        }
+        .model-button {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-top: 10px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        .blue-gradient {
+            background: linear-gradient(135deg, #74AAFF, #acc6f4);
+            color: white;
+        }
+        .pink-gradient {
+            background: linear-gradient(135deg, #FF6B95, #FF8E6B);
+            color: white;
+        }
+        .model-button:hover {
+            transform: scale(1.05);
+        }
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning">
+            【🐷魔魔要注意：使用深入研究！！】
+        </div>
+        <div class="warning">
+            【🐷魔魔要注意：使用深入研究！！】
+        </div>
+        <div class="warning">
+            【🐷魔魔要注意：使用深入研究！！】
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="model-header">
+                    <span>深入研究 & 广泛搜集</span>
+                    <a href="https://chatgpt.com/?model=o1-pro" target="_blank">O1 Pro</a>
+                </div>
+                <div class="model-content">
+                    <p>初期用：出点子，广泛搜资料，草拟文章（慢）</p>
+                    <a href="https://chatgpt.com/?model=o1-pro" target="_blank" class="model-button pink-gradient">打开O1-Pro，⚠️要用深入研究！！</a>
+                    <img src="./img/gpt-pro.png" alt="O1 Pro" class="png-button" onclick="window.open('https://chatgpt.com/?model=o1-pro', '_blank')">
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="model-header">
+                    <span>算法和代码</span>
+                    <a href="https://claude.ai/new" target="_blank">Claude</a>
+                </div>
+                <div class="model-content">
+                    <p>最后用：写文章，不能搜索资料</p>
+                    <a href="https://claude.ai/new" target="_blank" class="model-button pink-gradient">打开Claude，⚠️要用Extended！！</a>
+                    <img src="./img/claude.png" alt="Claude" class="png-button" onclick="window.open('https://claude.ai/new', '_blank')">
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="model-header">
+                    <span>日常小任务</span>
+                    <a href="https://chatgpt.com/?model=gpt-4-5" target="_blank">GPT-4.5</a>
+                </div>
+                <div class="model-content">
+                    <p>快捷处理日常小任务</p>
+                    <a href="https://chatgpt.com/?model=gpt-4-5" target="_blank" class="model-button blue-gradient">打开 GPT-4.5</a>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="model-header">
+                    <span>随意问答</span>
+                    <a href="https://chatgpt.com/?model=o3-mini-high" target="_blank">O3 Mini</a>
+                </div>
+                <div class="model-content">
+                    <p>轻量级，不限制使用次数</p>
+                    <a href="https://chatgpt.com/?model=o3-mini-high" target="_blank" class="model-button blue-gradient">打开 O3 Mini</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

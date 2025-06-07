@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>叩魔之家</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5dc;
+        }
+        h1 {
+            color: #8b0000;
+        }
+        .house-map {
+            width: 80%;
+            margin: auto;
+            border: 2px solid black;
+            position: relative;
+            background-color: white;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>叩魔的家 🏡</h1>
+    <div class="house-map">
+        <!-- 这里可以放SVG或图片 -->
+<!--         <img src="house-map.png" alt="叩魔之家平面图" width="100%"> -->
+      <svg width="500" height="300" style="border:1px solid black;">
+        <!-- 房间结构 -->
+        <rect x="50" y="50" width="150" height="100" fill="lightblue" stroke="black" stroke-width="2"/>
+        <text x="75" y="100" font-size="16">卧室</text>
+    
+        <rect x="250" y="50" width="150" height="100" fill="lightgreen" stroke="black" stroke-width="2"/>
+        <text x="275" y="100" font-size="16">客厅</text>
+    
+        <rect x="150" y="200" width="200" height="80" fill="lightgray" stroke="black" stroke-width="2"/>
+        <text x="200" y="250" font-size="16">厨房</text>
+      </svg>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!-- 参考这个来修改： https://chatgpt.com/g/g-p-67ba10b4360c8191b8f5af8e9347d785-kou-kou-mo-mo-wan/c/680590d6-438c-800e-ade1-edea6faf4e42 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #textDisplay {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Momo Cat Tickles</title>
+
+    <!-- Tailwind CSS v3+ -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-p1CmQ1WcW1+..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+    <!-- 引用外部 JavaScript 文件 -->
+    <script src="momo-cat.js"></script>
+</head>
+
+<body class="bg-pink-50 flex items-center justify-center min-h-screen p-4">
+
+    <!-- 主卡片 -->
+    <div class="max-w-md w-full bg-white rounded-xl p-6 shadow-lg transition-shadow hover:shadow-2xl">
+        <!-- 标题 -->
+        <h1 class="text-2xl font-bold text-center mb-4">给魔宝宝挠痒痒！</h1>
+
+        <!-- 猫咪图片容器 -->
+         <!-- 文字显示区域 -->
+        <div id="textDisplay" class="mt-4 text-center text-lg font-bold text-pink-600 min-h-[60px] transition-opacity duration-500"></div>
+        <div class="relative">
+            <!-- 魔魔猫图片，初始为躺着 -->
+            <img id="momoCat" src="assets/momo_cat_lying.png" alt="Momo Cat Lying" class="w-full rounded-lg" />
+            <!-- 热点按钮：耳朵 -->
+            <button id="ear"
+                class="absolute top-10 right-16 w-12 h-12 bg-transparent hover:bg-pink-100 rounded-full transition-colors"></button>
+            <!-- 热点按钮：肚子 -->
+            <button id="belly"
+                class="absolute bottom-20 left-1/2 w-20 h-12 bg-transparent hover:bg-pink-100 rounded transition-colors -translate-x-1/2"></button>
+            <!-- 热点按钮：小爪 -->
+            <button id="paw"
+                class="absolute bottom-10 left-12 w-12 h-12 bg-transparent hover:bg-pink-100 rounded-full transition-colors"></button>
+            <!-- 左耳 -->
+            <button id="ear-left"
+                class="absolute top-8 right-20 w-12 h-12 bg-transparent hover:bg-pink-100 rounded-full transition-colors"></button>
+            <!-- 右耳 -->
+            <button id="ear-right"
+                class="absolute top-8 right-8 w-12 h-12 bg-transparent hover:bg-pink-100 rounded-full transition-colors"></button>
+            <!-- 额头 -->
+            <button id="forehead"
+                class="absolute top-4 left-1/2 w-16 h-16 bg-transparent hover:bg-pink-100 rounded-full transition-colors -translate-x-1/2"></button>
+            <!-- 下巴 -->
+            <button id="chin"
+                class="absolute bottom-40 left-1/2 w-20 h-12 bg-transparent hover:bg-pink-100 rounded transition-colors -translate-x-1/2"></button>
+            <!-- 左前爪 -->
+            <button id="paw-left"
+                class="absolute bottom-8 left-16 w-12 h-12 bg-transparent hover:bg-pink-100 rounded-full transition-colors"></button>
+            <!-- 右前爪 -->
+            <button id="paw-right"
+                class="absolute bottom-8 right-16 w-12 h-12 bg-transparent hover:bg-pink-100 rounded-full transition-colors"></button>
+            <!-- 尾巴 -->
+            <button id="tail"
+                class="absolute bottom-12 right-4 w-16 h-16 bg-transparent hover:bg-pink-100 rounded-full transition-colors"></button>
+        </div>
+
+        <!-- 控制按钮 & 输入框 -->
+        <div class="mt-6 space-y-4">
+            <!-- 切换躺/站 按钮 -->
+            <button id="resetBtn"
+                class="w-full px-4 py-2 bg-pink-400 text-white rounded-lg font-medium transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-500">
+                Toggle Pose 切换躺/站
+            </button>
+
+            <!-- 示例输入框，聚焦时有渐变边框
+            <input type="text" placeholder="Say something..."
+                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-4 focus:ring-pink-400 focus:ring-opacity-50" /> -->
+        </div>
+    </div>
+
+    <!-- 音频元素 -->
+    <audio id="earAudio" src="assets/ear.m4a"></audio>
+    <audio id="bellyAudio" src="assets/belly.m4a"></audio>
+    <audio id="pawAudio" src="assets/paw.m4a"></audio>
+    <audio id="earAudio2" src="assets/ear2.m4a"></audio>
+    <audio id="bellyAudio2" src="assets/belly2.m4a"></audio>
+    <audio id="pawAudio1" src="assets/paw1.m4a"></audio>
+    <audio id="pawAudio2" src="assets/paw2.m4a"></audio>
+</body>
+</html>

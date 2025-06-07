@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>魔魔的为什么</title>
+
+    <!-- 引入 seedrandom 库（可选，用于固定随机种子） -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+
+    <!-- 引入魔魔的why函数 -->
+    <script src="momo-why.js"></script>
+    
+    <!-- 添加一些基本样式 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #ff69b4;
+            text-align: center;
+        }
+        
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #ff1493;
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff0f5;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px dashed #ff69b4;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>魔魔的十万个为什么</h1>
+        <div style="text-align: center;">
+            <button onclick="showWhy()">为什么？</button>
+            <button onclick="showChain()">深入追问</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const momoWhy = new MomoWhy();
+
+        function showWhy() {
+            document.getElementById('result').innerHTML = momoWhy.why();
+        }
+
+        function showChain() {
+            const chain = momoWhy.whyChain(4);
+            let html = '';
+            chain.forEach(item => {
+                html += `<p><strong>Q:</strong> ${item.Q}</p>`;
+                html += `<p><strong>A:</strong> ${item.A}</p>`;
+                html += '<hr>';
+            });
+            document.getElementById('result').innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>

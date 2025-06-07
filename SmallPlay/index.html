@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmallPlay - 选择一个开始你的参观吧</title>
+    
+    <!-- Tailwind CSS v3+ -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .card {
+            animation: fadeIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+    </style>
+</head>
+<body class="bg-pink-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-pink-600 text-center mb-8 fade-in">
+            选择一个，开始你的参观吧
+        </h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="Birthdays" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">Birthdays</h2>
+                <p class="text-gray-600">魔生日游戏</p>
+            </a>
+            
+            <a href="KoMoFireworks.html" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">KoMoFireworks</h2>
+                <p class="text-gray-600">叩魔烟花</p>
+            </a>
+            
+            <a href="MoIsMyDaughter.html" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">MoIsMyDaughter</h2>
+                <p class="text-gray-600">魔是我的女儿</p>
+            </a>
+            
+            <a href="MomoWhy" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">MomoWhy</h2>
+                <p class="text-gray-600">魔魔为什么</p>
+            </a>
+            
+            <a href="KoMoFamily" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">KoMoFamily</h2>
+                <p class="text-gray-600">叩魔家生日庆典</p>
+            </a>
+            
+            <a href="KoMoHome.html" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">KoMoHome</h2>
+                <p class="text-gray-600">叩魔房子（正在建设）</p>
+            </a>
+            
+            <a href="MomoMenu.html" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">MomoMenu</h2>
+                <p class="text-gray-600">魔魔和叩叩美食推荐</p>
+            </a>
+            
+            <a href="Xiao-Liu-Ren.html" class="card block bg-white hover:bg-pink-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6">
+                <h2 class="text-xl font-semibold text-pink-500 mb-2">Xiao-Liu-Ren</h2>
+                <p class="text-gray-600">小六壬</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

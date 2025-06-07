@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔魔专属验证</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        .verify-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 90%;
+            width: 500px;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .question {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateX(5px);
+        }
+
+        input[type="date"],
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-verify {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-exit {
+            background-color: #7f8c8d;
+            color: white;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            min-height: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .heart-icon {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .verify-container {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #e74c3c;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <h1>💝 魔魔专属验证 💝</h1>
+        
+        <div class="question-container">
+            <div class="question">
+                <span class="heart-icon">❤️</span> 叩叩魔魔第一次见面的日期是？
+                <input type="date" id="firstMeet">
+            </div>
+            
+            <div class="question">
+                <span class="heart-icon">❤️</span> 叩叩魔魔第一次牵手的日期是？
+                <input type="date" id="firstHold">
+            </div>
+            
+            <div class="question">
+                <span class="heart-icon">❤️</span> 叩叩魔魔在一起的日期是？
+                <input type="date" id="together">
+            </div>
+
+            <div class="question">
+                <span class="heart-icon">❤️</span> 魔魔的小电动车是什么颜色的？
+                <input type="text" id="bikeColor" placeholder="提示：像某道美食的颜色">
+            </div>
+
+            <div class="question">
+                <span class="heart-icon">❤️</span> 叩叩和魔魔第一次看的电影是什么？
+                <input type="text" id="firstMovie" placeholder="提示：宫崎骏的作品">
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="error-message" id="errorMsg"></div>
+
+        <div class="button-container">
+            <button class="btn btn-verify" onclick="verifyAnswers()">验证身份</button>
+            <button class="btn btn-exit" onclick="leaveSite()">我不是魔魔</button>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            firstMeet: '2024-02-22',
+            firstHold: '2024-03-16', // 需要更新为正确日期
+            together: '2024-03-17',
+            bikeColor: '番茄炒蛋',
+            firstMovie: '哈尔的移动城堡'
+        };
+
+        let progress = 0;
+
+        function updateProgress() {
+            const inputs = ['firstMeet', 'firstHold', 'together', 'bikeColor', 'firstMovie'];
+            const filledInputs = inputs.filter(id => document.getElementById(id).value.trim() !== '');
+            progress = (filledInputs.length / inputs.length) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        function verifyAnswers() {
+            const inputs = {
+                firstMeet: document.getElementById('firstMeet').value,
+                firstHold: document.getElementById('firstHold').value,
+                together: document.getElementById('together').value,
+                bikeColor: document.getElementById('bikeColor').value.trim(),
+                firstMovie: document.getElementById('firstMovie').value.trim()
+            };
+
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (Object.values(inputs).some(value => !value)) {
+                errorMsg.textContent = '亲爱的魔魔，要把所有问题都回答完哦 💕';
+                return;
+            }
+
+            const allCorrect = Object.entries(inputs).every(([key, value]) => {
+                return value.toLowerCase() === correctAnswers[key].toLowerCase();
+            });
+
+            if (allCorrect) {
+                window.location.href = 'main.html';
+            } else {
+                errorMsg.textContent = '亲爱的，好像有些地方记错了呢，再想想吧 💝';
+                document.querySelector('.verify-container').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.querySelector('.verify-container').style.animation = '';
+                }, 500);
+            }
+        }
+
+        function leaveSite() {
+            alert('这里是专属于魔魔的秘密花园，再见啦 👋');
+            window.close();
+            window.location.href = 'about:blank';
+        }
+
+        // 监听所有输入框的变化
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', updateProgress);
+        });
+
+        // 添加按Enter键提交功能
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                verifyAnswers();
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</body>
+</html>

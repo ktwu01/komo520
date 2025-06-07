@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小六壬占卜</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold text-center mb-8">欢迎来到小六壬，开始掐指一算！</h1>
+        <div id="agreement" class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">占卜原则</h2>
+            <div class="space-y-2">
+                <p>1、占卜宜心诚：</p>
+                <ul class="list-disc pl-8 space-y-2">
+                    占卜时，要静心调神，专心瞑想要下问的事情。 倪师说：我们人啊，在心血来潮的时候占卜, “今天眼睛怎么一直在跳” “或者心慌慌意乱乱的” 不知道要发生什么事情, 或者是一件事情，犹豫难以决定的时候，或者是此行利不利的时候, 当你心血来潮的时候，想用它，就以当时为准</p>
+                </ul>
+                <p>2、起卦原则：</p>
+                <ul class="list-disc pl-8 space-y-2">
+                    <li>不诚不占：故意试探易占之灵验与否不占</li>
+                    <li>不动不占：吉凶生于动作之始，成败在乎决断之中</li>
+                    <li>不疑不占：如果心中没有什么事，没有什么事情上的疑惑不占</li>
+                    <li>一事不两占：占问事情，一件事only要占一卦. 所以有时候你想起来，有时候你想不起来，但是算过以后，你不要重复念头去算, 第二次一定不在了嘛，反而会害到你自己，为什么，因为你到时候会不知所措啊。</li>
+                    <li>两事不同占：不同事情不能在同一卦象里占卜</li>
+                    <li>倪师说：小六壬需要的资料，就是农历月日时，三个资料就好</li>
+                    <li>用户可暂时在此使用 <a href="https://wannianrili.bmcx.com" target="_blank" rel="noopener noreferrer">万年历农历日历查看网站</a>. 之后最好改成农历API或者使用现成的农历换算算法。</li>
+                </ul>
+            </div>
+            <div class="mt-6 text-center">
+                <button id="agreeBtn" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+                    我同意以上原则 (无需点击)
+                </button>
+            </div>
+        </div>
+
+        <div id="fortuneTelling" class="hidden">
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">你需要占卜的事情是：</label>
+                    <input type="text" id="fortuneQuestion" class="w-full p-2 border rounded" placeholder="请输入你要占卜的事情">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">农历月（1-12）：</label>
+                    <input type="number" id="lunarMonth" min="1" max="12" class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">农历日（1-30）：</label>
+                    <input type="number" id="lunarDay" min="1" max="30" class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">农历时辰（1-12）：</label>
+                    <div class="text-sm text-gray-600 mb-2">
+                        1:子(23-1) 2:丑(1-3) 3:寅(3-5) 4:卯(5-7)<br>
+                        5:辰(7-9) 6:巳(9-11) 7:午(11-13) 8:未(13-15)<br>
+                        9:申(15-17) 10:酉(17-19) 11:戌(19-21) 12:亥(21-23)
+                    </div>
+                    <input type="number" id="lunarHour" min="1" max="12" class="w-full p-2 border rounded">
+                </div>
+                <button id="calculateBtn" class="w-full bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                    点击这里开始占卜
+                </button>
+                <div class="text-sm text-gray-600 mb-2">
+                        占卜结果的含义:<br>
+                        空亡：代表凶；流连代表事情停止不前、此行不利；<br>
+                        赤口：代表有第三者介入、是非、人为的事情干扰；<br>
+                        速喜：代表立竿见影马上看到所要的结果；<br>
+                        小吉：代表两个礼拜后看到所要的结果；<br>
+                        大安：代表一个礼拜左右看到想要的结果。
+                    </div>
+            </div>
+
+            <div id="result" class="mt-8 hidden">
+                <h3 id="resultTitle" class="text-xl font-semibold mb-4"></h3>
+                <div class="space-y-4">
+                    <p id="monthResult" class="p-4 bg-gray-50 rounded"></p>
+                    <p id="dayResult" class="p-4 bg-gray-50 rounded"></p>
+                    <p id="hourResult" class="p-4 bg-gray-50 rounded"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getXiaoLiuRenSigns(lunarMonth, lunarDay, lunarHour) {
+            const signs = ["大安", "留连", "速喜", "赤口", "小吉", "空亡"];
+            
+            let middleNumber1 = (lunarMonth) % 6;
+            let middleNumber2 = (lunarMonth + lunarDay - 1) % 6;
+            let middleNumber3 = (lunarMonth + lunarDay + lunarHour - 2) % 6;
+
+            const index1 = middleNumber1 || 6;
+            const index2 = middleNumber2 || 6;
+            const index3 = middleNumber3 || 6;
+            
+            return {
+                1: [index1, signs[index1 - 1]],
+                2: [index2, signs[index2 - 1]],
+                3: [index3, signs[index3 - 1]]
+            };
+        }
+
+        document.getElementById('agreeBtn').addEventListener('click', function() {
+            document.getElementById('agreement').classList.add('hidden');
+            document.getElementById('fortuneTelling').classList.remove('hidden');
+        });
+
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const fortuneQuestion = document.getElementById('fortuneQuestion').value.trim();
+            const lunarMonth = parseInt(document.getElementById('lunarMonth').value);
+            const lunarDay = parseInt(document.getElementById('lunarDay').value);
+            const lunarHour = parseInt(document.getElementById('lunarHour').value);
+
+            if (!fortuneQuestion) {
+                alert('请输入需要占卜的事情！');
+                return;
+            }
+
+            if (!lunarMonth || !lunarDay || !lunarHour ||
+                lunarMonth < 1 || lunarMonth > 12 ||
+                lunarDay < 1 || lunarDay > 30 ||
+                lunarHour < 1 || lunarHour > 12) {
+                alert('请输入有效的农历日期和时辰！');
+                return;
+            }
+
+            const signs = getXiaoLiuRenSigns(lunarMonth, lunarDay, lunarHour);
+            
+            document.getElementById('resultTitle').textContent = 
+                `针对"${fortuneQuestion}"的小六壬占卜结果：`;
+            document.getElementById('monthResult').textContent = 
+                `月之灵动：index ${signs[1][0]}，签文：${signs[1][1]}`;
+            document.getElementById('dayResult').textContent = 
+                `日之灵动：index ${signs[2][0]}，签文：${signs[2][1]}`;
+            document.getElementById('hourResult').textContent = 
+                `时之灵动：index ${signs[3][0]}，签文：${signs[3][1]}`;
+            
+            document.getElementById('result').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

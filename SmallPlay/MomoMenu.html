@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔魔和叩叩美食推荐</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .button {
+            transition: all 0.2s ease;
+        }
+        .button:hover {
+            transform: translateY(-1px);
+        }
+        .button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto p-4">
+        <h1 class="text-3xl font-bold text-center mb-8">魔魔和叩叩美食推荐</h1>
+
+        <!-- 忌口提示 -->
+        <div class="card mb-8 bg-red-50 rounded-lg shadow">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-4 text-red-700">特别注意 ⚠️</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h3 class="font-medium text-red-600 mb-2">提醒叩: 要直接给魔做吃的！注意牛蛙做熟</h3>
+                        <h3 class="font-medium text-red-600 mb-2">肉蛋虾蟹优先，肉食在魔这儿＞＞甜食</h3>
+                        <h3 class="font-medium text-red-600 mb-2">给魔吃第一口。魔妈十分了解我的食谱，整一大堆羊肉卷和一些甜玉米，放浓浓的火锅底料，再烧一大盆红烧小龙虾，一家人围着热气腾腾的火锅在家边走边炫</h3>
+                        <h3 class="font-medium text-red-600 mb-2">有东西在才能让mo愿意喝水</h3>
+                        <h3 class="font-medium text-red-600 mb-2">魔过敏/不耐受:</h3>
+                        <ul class="list-disc list-inside text-red-600" id="allergies-list">
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-red-600 mb-2">魔不喜欢的食材:</h3>
+                        <ul class="list-disc list-inside text-red-600" id="dislikes-list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 推荐部分 -->
+        <div class="card mb-8 bg-white rounded-lg shadow">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <i icon-name="heart" class="mr-2 text-pink-500"></i>
+                    随机搭配
+                </h2>
+                <div class="flex gap-4 mb-4">
+                    <button onclick="app.generateRecommendation('breakfast')" 
+                            class="button px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        早餐
+                    </button>
+                    <button onclick="app.generateRecommendation('lunch')"
+                            class="button px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        午餐
+                    </button>
+                    <button onclick="app.generateRecommendation('dinner')"
+                            class="button px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        晚餐
+                    </button>
+                </div>
+                <div id="recommendation-result" class="hidden bg-gray-100 p-4 rounded-lg">
+                </div>
+            </div>
+        </div>
+
+        <!-- 甜品展示 -->
+        <div class="card bg-white rounded-lg shadow">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <i icon-name="cake" class="mr-2 text-pink-500"></i>
+                    晚餐可选甜品
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="desserts-grid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 将所有代码包装在一个立即执行函数中，避免全局变量污染
+        const app = (function() {
+            // 食物数据库
+            const foodDatabase = {
+    breakfast: {
+        粥类: [
+            { name: '皮蛋瘦肉粥', recommend: '皮蛋瘦肉粥' },
+            { name: '虾仁干贝粥', recommend: '虾仁干贝粥' },
+            { name: '小米粥', recommend: '小米粥 + 咸鸭蛋' },
+            { name: '海福盛粥', recommend: '海福盛粥' }
+        ],
+        包子: [
+            { name: '梅菜扣肉包', recommend: '梅菜扣肉包' },
+            { name: '黑椒牛肉包', recommend: '黑椒牛肉包' },
+            { name: '番茄炒蛋包', recommend: '番茄炒蛋包' },
+            { name: '蟹粉小笼包', recommend: '蟹粉小笼包' }
+        ],
+        饮品: [
+            { name: '豆浆', recommend: '现磨豆浆' },
+            { name: '米浆', recommend: '五谷米浆（魔不吃叩吃）' },
+            { name: '奶茶1', recommend: '没有鲜奶的植物奶（植脂末）奶茶，常年三分或不加糖' },
+            { name: '咖啡', recommend: '摩卡咖啡' }
+        ],
+        配菜: [
+            { name: '煎蛋', recommend: '荷包蛋' },
+            { name: '咸鸭蛋', recommend: '咸鸭蛋' },
+            { name: '小黄瓜', recommend: '凉拌黄瓜（魔不吃叩吃）' },
+            { name: '菠菜', recommend: '清爽沙拉（魔不吃叩吃）' }
+        ]
+    },
+                meat: {
+                    seafood: [
+                    { name: '青蟹', recommend: '清蒸青蟹' },
+                    { name: '大闸蟹', recommend: '清蒸大闸蟹' },
+                    { name: '小龙虾', recommend: '十三香小龙虾 (可放蒜蓉)' },
+                    { name: '基围虾', recommend: '白灼基围虾' },
+                    { name: '基围虾', recommend: '南极磷虾？' },
+                    { name: '虾1', recommend: '芥末虾球' },
+                    { name: '虾2', recommend: '虾仁滑蛋' },
+                    { name: '金枪鱼', recommend: '金枪鱼沙拉饭' },
+                    { name: '鲈鱼', recommend: '清蒸鲈鱼（魔不吃叩吃）' },
+                    { name: '鳕鱼', recommend: '煎鳕鱼' },
+                    { name: '扇贝', recommend: '蒜蓉粉丝蒸扇贝（魔不吃叩吃）' },
+                    { name: '章鱼', recommend: '辣炒章鱼（魔不吃叩吃）' },
+                    { name: '墨鱼', recommend: '墨鱼丸子汤（魔不吃叩吃）' },
+                    { name: '牛蛙', recommend: '紫苏牛蛙' },
+                    ],
+                    meat: [
+                    { name: '羊肉', recommend: '羊肉火锅，麻酱' },
+                    { name: '薄片肉1', recommend: '烤羊肉卷' },
+                    { name: '薄片肉2', recommend: '烤羊肉片蘸酱' },
+                    { name: '薄片肉3', recommend: '羊肉卷甜玉米，' },
+                    { name: '牛肉', recommend: '水煮牛肉' },
+                    { name: '和牛', recommend: '和牛牛排' },
+                    { name: '鹅肝', recommend: '香煎鹅肝' },
+                    { name: '鸡柳', recommend: '金汤鸡柳' },
+                    { name: '鸡柳2', recommend: '鸡柳大人' },
+                    { name: '鸡胸肉', recommend: '土豆鸡胸肉' },
+                    { name: '鸡胸肉2', recommend: '青椒鸡胸肉' },
+                    { name: '鸡肉', recommend: '鸡肉汉堡' },
+                    { name: '鸡翅', recommend: '麦辣鸡翅（不要奥尔良），鸡翅根' },
+                    { name: '鸡翅2', recommend: '无穷鸡翅根 不要太辣' },
+                    { name: '猪里脊', recommend: '糖醋里脊（魔不吃叩吃）' },
+                    { name: '猪肉', recommend: '锅包肉' },
+                    { name: '猪肉2', recommend: '红烧肉' },
+                    { name: '猪肉3', recommend: '葱爆肉片' },
+                    { name: '猪肉4', recommend: '红烧肉' },
+                    { name: '猪肉5', recommend: '梅菜扣肉' },
+                    { name: '兔肉', recommend: '麻辣兔肉（魔不吃叩吃）' },
+                    { name: '鹌鹑', recommend: '红烧鹌鹑（魔不吃叩吃）' },
+                    { name: '鸽子', recommend: '清炖乳鸽（魔不吃叩吃）' },
+                    { name: '土豆', recommend: '土豆炖鸡肉' },
+                    { name: '辣椒', recommend: '辣椒炒肉' },
+                    ]
+                },
+                vegetable: [
+                    { name: '西红柿', recommend: '番茄炒蛋' },
+                    { name: '土豆', recommend: '香酥土豆条' },
+                    { name: '土豆2', recommend: '芝士土豆泥' },
+                    { name: '玉米', recommend: '甜玉米，羊肉玉米火锅，肯德基玉米粒需要有沙拉酱' },
+                    { name: '黄瓜', recommend: '刀拍黄瓜（魔不吃叩吃）' },
+                    { name: '板栗', recommend: '糖炒板栗' }                   
+                ],
+                eggs: [
+                    { name: '鸡蛋', recommend: '番茄炒蛋' },
+                    { name: '鸡蛋2', recommend: '金钱蛋' },
+                    { name: '鹌鹑蛋', recommend: '鹌鹑蛋' },
+                    { name: '咸鸭蛋', recommend: '咸鸭蛋' },
+                    { name: '皮蛋', recommend: '皮蛋瘦肉粥' }
+                ],
+    staple: {
+        noodles: [
+            { name: '米粉1', recommend: '炒粉比如干炒牛河（魔不吃叩吃）' },
+            { name: '米粉2', recommend: '炒粉比如江西炒粉（魔不吃叩吃）' },
+            { name: '刀削面', recommend: '牛肉刀削面（魔不吃叩吃）' },
+            { name: '炒面1', recommend: '海鲜炒面' },
+            { name: '炒面2', recommend: '豉油王炒面（魔不吃叩吃）' },
+            { name: '乌冬面', recommend: '海鲜乌冬面' },
+        ],
+        rice: [
+            { name: '扬州炒饭', recommend: '经典扬州炒饭' },
+            { name: '糯米饭', recommend: '腊味糯米饭' },
+            { name: '煲仔饭', recommend: '腊味煲仔饭' },
+        ],
+        buns: [
+            { name: '小笼包', recommend: '鲜肉小笼包' },
+            { name: '小笼包2', recommend: '梅菜扣肉包' },
+            { name: '叉烧包3', recommend: '黑椒牛肉包' },
+            { name: '灌汤包', recommend: '蟹黄灌汤包' },
+        ],
+        hamburger: [
+            { name: '汉堡1', recommend: '肯德基双层脆鸡堡' },
+            { name: '汉堡2', recommend: '鳕鱼堡' },
+            { name: '汉堡3', recommend: '麦当劳？鸡肉堡' },
+        ],
+
+        
+    },
+                drinks: [
+                    '万里木兰 常年三分或不加糖',
+                    '山野栀子 常年三分或不加糖',
+                    '豆浆',
+                    '摩卡咖啡',
+                    '卡布奇诺',
+                    '含有爆珠的饮料',
+                    '绿豆汤'
+                ],
+                desserts: {
+                    可选甜品: [
+                        { name: '蓝莓果酱甜甜圈', note: '限量一个' },
+                        { name: '小牛角包', note: '限量一个' },
+                        { name: '蛋挞', note: '限量一个' },
+                        { name: '蛋黄月饼', note: '限量一个' },
+                        { name: '优酸乳', note: '限量一个' },
+                        { name: '草莓味奶酪', note: '限量一个' },
+                        { name: '鲜芋泥奶绿 植脂末奶', note: '限量一个' },
+                        { name: '达利园小面包', note: '限量一个' },
+                        { name: '玉米热狗', note: '限量一个' },
+                        { name: '柠檬蛋挞', note: '限量一个' },
+                        { name: '抹茶舒芙蕾', note: '不含奶油' },
+                        { name: '蜜桃蛋糕卷', note: '少量' },
+                        { name: '芋泥小蛋糕', note: '少量' },
+                        { name: '巧克力：喜欢好时、德芙 还有80～95%的黑巧 魔不喜欢甜的 最近莫名很馋巧克力导致动不动想喝热可可', note: '少量' },
+                        { name: '抹茶冰激凌', note: '少量' }
+                    ]
+                },
+                fruits: [
+                    '丑橘',
+                    '苹果',
+                    '梨子',
+                    '香蕉',
+                    '炸香蕉',
+                    '蓝莓',
+                    '橙',
+                    '葡萄',
+                    '橘',
+                    '苹果',
+                    '西瓜',
+                    '草莓',
+                    '番茄',
+                    '奇异果',
+                    '胡萝卜',
+                    '柠檬',
+                    '蓝莓',
+                    '樱桃',
+                    '梨',
+                    '桃子',
+                    '香蕉',
+                    '木瓜',
+                    '橙子',
+                    '芒果',
+                    '龙眼',
+                    '柚子',
+                    '椰子',
+                    '杏子',
+                    '石榴',
+                    '荔枝',
+                    '李子',
+                    '红枣',
+                    '柿子',
+                    '番石榴',
+                    '橄榄',
+                    '无花果',
+                    '桑葚',
+                    '杨梅'
+                    ],
+                avoid: {
+                    过敏: [
+                        '乳糖',
+                        '奶制品',
+                        '奶油'
+                    ],
+                    不喜欢: [
+                        '葱',
+                        '姜',
+                        '蒜',
+                        '开心果',
+                        '榴莲',
+                        '菠萝',
+                        '鸭肉',
+                        '香菇：  魔眼中的香菇：一块巨型的葱姜蒜',
+                        '粉条',
+                        '除了薄片肉以外的肉制品，如动物内脏，带骨大块肉'
+                    ]
+                }
+            };
+
+            // 随机选择函数
+            function getRandomItem(array) {
+                return array[Math.floor(Math.random() * array.length)];
+            }
+
+            // 生成推荐
+function generateRecommendation(time) {
+    const resultDiv = document.getElementById('recommendation-result');
+    resultDiv.classList.remove('hidden');
+    
+    let content = '';
+    
+    if (time === 'breakfast') {
+        const congee = getRandomItem(foodDatabase.breakfast.粥类);
+        const bun = getRandomItem(foodDatabase.breakfast.包子);
+        const drink = getRandomItem(foodDatabase.breakfast.饮品);
+        const side = getRandomItem(foodDatabase.breakfast.配菜);
+        
+        content = `
+            <h3 class="font-medium text-lg mb-2">推荐早餐搭配:</h3>
+            <div class="space-y-2">
+                <p class="flex items-center">
+                    <i icon-name="soup" class="mr-2 h-4 w-4"></i>
+                    粥品: ${congee.recommend}
+                </p>
+                <p class="flex items-center">
+                    <i icon-name="wheat" class="mr-2 h-4 w-4"></i>
+                    主食: ${bun.recommend}
+                </p>
+                <p class="flex items-center">
+                    <i icon-name="coffee" class="mr-2 h-4 w-4"></i>
+                    饮品: ${drink.recommend}
+                </p>
+                <p class="flex items-center">
+                    <i icon-name="utensils" class="mr-2 h-4 w-4"></i>
+                    配菜: ${side.recommend}
+                </p>
+            </div>
+        `;
+    } else {
+        // 午餐和晚餐新增主食选择
+        const stapleFood = getRandomItem(foodDatabase.staple.rice.concat(
+            foodDatabase.staple.noodles,
+            foodDatabase.staple.buns
+        ));
+        const seafood = getRandomItem(foodDatabase.meat.seafood);
+        const meat = getRandomItem(foodDatabase.meat.meat);
+        const veggies = foodDatabase.vegetable.sort(() => 0.5 - Math.random()).slice(0, 2);
+        const drink = getRandomItem(foodDatabase.drinks);
+        const fruit = getRandomItem(foodDatabase.fruits);
+        
+        content = `
+            <h3 class="font-medium text-lg mb-2">推荐${time === 'lunch' ? '午餐' : '晚餐'}搭配:</h3>
+            <div class="space-y-2">
+                <p class="flex items-center">
+                    <i icon-name="wheat" class="mr-2 h-4 w-4"></i>
+                    主食: ${stapleFood.recommend}
+                </p>
+                <p class="flex items-center">
+                    <i icon-name="fish" class="mr-2 h-4 w-4"></i>
+                    荤菜: ${seafood.recommend} + ${meat.recommend}
+                </p>
+                <p class="flex items-center">
+                    <i icon-name="salad" class="mr-2 h-4 w-4"></i>
+                    素菜: ${veggies[0].recommend} + ${veggies[1].recommend}
+                </p>
+                <p class="flex items-center">
+                    <i icon-name="coffee" class="mr-2 h-4 w-4"></i>
+                    饮品: ${drink}
+                </p>
+                <p class="flex items-center">
+                    <i icon-name="apple" class="mr-2 h-4 w-4"></i>
+                    水果: ${fruit}
+                </p>
+        `;
+        
+        if (time === 'dinner') {
+            const dessert = getRandomItem(foodDatabase.desserts.可选甜品);
+            content += `
+                <p class="flex items-center">
+                    <i icon-name="cake" class="mr-2 h-4 w-4"></i>
+                    甜点: ${dessert.name} (${dessert.note})
+                </p>
+            `;
+        }
+        
+        content += '</div>';
+    }
+    
+    resultDiv.innerHTML = content;
+    lucide.createIcons();
+}
+
+            // 初始化页面
+            function initializePage() {
+                // 填充过敏列表
+                const allergiesList = document.getElementById('allergies-list');
+                foodDatabase.avoid.过敏.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    allergiesList.appendChild(li);
+                });
+
+                // 填充不喜欢的食材列表
+                const dislikesList = document.getElementById('dislikes-list');
+                foodDatabase.avoid.不喜欢.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    dislikesList.appendChild(li);
+                });
+
+                // 填充甜品列表
+                const dessertsGrid = document.getElementById('desserts-grid');
+                foodDatabase.desserts.可选甜品.forEach(dessert => {
+                    const div = document.createElement('div');
+                    div.className = 'bg-gray-50 p-3 rounded-lg';
+                    div.innerHTML = `
+                        <p class="font-medium">${dessert.name}</p>
+                        <p class="text-sm text-gray-600">${dessert.note}</p>
+                    `;
+                    dessertsGrid.appendChild(div);
+                });
+
+                // 初始化图标
+                lucide.createIcons();
+            }
+
+            // 在页面加载完成后初始化
+            document.addEventListener('DOMContentLoaded', initializePage);
+
+            // 返回公共接口
+            return {
+                generateRecommendation
+            };
+        })();
+    </script>
+</body>
+</html>

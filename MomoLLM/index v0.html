@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔魔的模型选择入口</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background-color: #f4f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+        .title {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .alert-box {
+            background-color: #fffde7;
+            border-left: 4px solid #ffd54f;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+        }
+        .model-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .model-card:hover {
+            transform: scale(1.02);
+        }
+        .model-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .model-btn:hover {
+            opacity: 0.9;
+        }
+        .model-description {
+            padding: 15px;
+            background-color: #f9f9fc;
+            text-align: left;
+        }
+        .gpt-btn {
+            background: linear-gradient(135deg, #74AAFF, #5A8DEA);
+        }
+        .claude-btn {
+            background: linear-gradient(135deg, #F39C6B, #E77F4E);
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+            }
+            .title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">魔魔的模型选择入口</h1>
+        
+        <div class="alert-box">写文章要用深度研究！</div>
+        
+        <div class="model-card">
+            <button class="model-btn gpt-btn" onclick="openLink('https://chat.openai.com/')">
+                ChatGPT (O1 Pro 深度研究用)
+            </button>
+            <div class="model-description">
+                <strong>O1 Pro：</strong>适合深度学术研究、严谨数据分析、复杂逻辑推理（速度较慢）。
+            </div>
+        </div>
+        
+        <div class="model-card">
+            <button class="model-btn gpt-btn" onclick="openLink('https://chat.openai.com/')">
+                ChatGPT (GPT-4.5 日常小任务)
+            </button>
+            <div class="model-description">
+                <strong>GPT-4.5：</strong>适合快速完成日常小任务，响应迅速。
+            </div>
+        </div>
+        
+        <div class="model-card">
+            <button class="model-btn claude-btn" onclick="openLink('https://claude.ai/')">
+                Claude (算法、代码和写作)
+            </button>
+            <div class="model-description">
+                <strong>Claude：</strong>擅长代码编写、算法优化、具体实现方案，以及深度逻辑和创意写作。
+            </div>
+        </div>
+        
+        <div class="model-card">
+            <button class="model-btn gpt-btn" onclick="openLink('https://chat.openai.com/')">
+                ChatGPT (广泛资料搜集、出点子)
+            </button>
+            <div class="model-description">
+                <strong>GPT：</strong>擅长广泛资料搜集、提供创新点子。
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

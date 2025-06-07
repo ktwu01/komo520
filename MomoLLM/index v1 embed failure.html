@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模型选择入口</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background-color: #f4f4f8;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .col {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .model-header {
+            background: linear-gradient(135deg, #74AAFF, #5A8DEA);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .model-content {
+            padding: 15px;
+        }
+        .warning {
+            background-color: #fffde7;
+            border-left: 4px solid #ffd54f;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: bold;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 600px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+            .iframe-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning">
+            【需注意：使用深度研究！！】
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="model-header">
+                    <span>深度研究 & 广泛搜集</span>
+                    <a href="https://chatgpt.com/?model=o1-pro" target="_blank">O1 Pro</a>
+                </div>
+                <div class="model-content">
+                    <p>初期用：出点子，广泛搜集资料，写文章（较慢）</p>
+                    <div class="iframe-container">
+                        <iframe src="https://chatgpt.com/?model=o1-pro"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="model-header">
+                    <span>算法和代码</span>
+                    <a href="https://claude.ai/new" target="_blank">Claude</a>
+                </div>
+                <div class="model-content">
+                    <p>最后用：写文章，不能搜索资料</p>
+                    <div class="iframe-container">
+                        <iframe src="https://claude.ai/new"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="model-header">
+                    <span>日常小任务</span>
+                    <a href="https://chatgpt.com/?model=gpt-4-5" target="_blank">GPT-4.5</a>
+                </div>
+                <div class="model-content">
+                    <p>快捷处理日常小任务</p>
+                    <div class="iframe-container">
+                        <iframe src="https://chatgpt.com/?model=gpt-4-5"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="model-header">
+                    <span>随意问答</span>
+                    <a href="https://chatgpt.com/?model=o3-mini-high" target="_blank">O3 Mini</a>
+                </div>
+                <div class="model-content">
+                    <p>轻量级，不限制使用次数</p>
+                    <div class="iframe-container">
+                        <iframe src="https://chatgpt.com/?model=o3-mini-high"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>叩魔美好瞬间</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- 自定义样式 -->
+  <style>
+    /* 自定义渐变与动画 */
+    .gradient-text {
+      background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .gradient-border:focus {
+      border-image: linear-gradient(45deg, #FF6B6B, #4ECDC4) 1;
+      border-width: 2px;
+      border-style: solid;
+      outline: none;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .btn-hover {
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .btn-hover:hover {
+      transform: scale(1.05);
+    }
+    
+    /* 超现代主义元素 */
+    .modern-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+      z-index: -1;
+    }
+    
+    .shape-1 {
+      width: 400px;
+      height: 400px;
+      top: -200px;
+      right: -200px;
+    }
+    
+    .shape-2 {
+      width: 300px;
+      height: 300px;
+      bottom: 100px;
+      left: -150px;
+    }
+    
+    /* 自定义滚动条 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #FF6B6B, #4ECDC4);
+      border-radius: 4px;
+    }
+    
+    /* 全局设置 */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+  </style>
+  <!-- 添加 Inter 字体 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FF6B6B',
+            secondary: '#4ECDC4',
+            dark: '#1A1A2E',
+            light: '#F7F7F7'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- 背景装饰 -->
+  <div class="modern-shape shape-1"></div>
+  <div class="modern-shape shape-2"></div>
+  
+  <!-- 导航栏 -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-cube text-primary text-2xl"></i>
+        <span class="text-xl font-bold gradient-text">叩魔瞬间</span>
+      </div>
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="#" class="hover:text-primary transition-colors duration-300">首页</a>
+        <a href="#moments" class="hover:text-primary transition-colors duration-300">精彩瞬间</a>
+        <a href="#gallery" class="hover:text-primary transition-colors duration-300">作品集</a>
+        <a href="#about" class="hover:text-primary transition-colors duration-300">关于我们</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="btn-hover hidden md:block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium">
+          分享瞬间
+        </button>
+        <button class="md:hidden text-gray-700">
+          <i class="material-icons">menu</i>
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- 移动端菜单 (默认隐藏) -->
+  <div id="mobile-menu" class="fixed inset-0 bg-dark bg-opacity-95 z-50 flex flex-col justify-center items-center hidden">
+    <button id="close-menu" class="absolute top-6 right-6 text-white">
+      <i class="material-icons text-3xl">close</i>
+    </button>
+    <div class="flex flex-col items-center space-y-8 text-white text-xl">
+      <a href="#" class="hover:text-primary transition-colors duration-300">首页</a>
+      <a href="#moments" class="hover:text-primary transition-colors duration-300">精彩瞬间</a>
+      <a href="#gallery" class="hover:text-primary transition-colors duration-300">作品集</a>
+      <a href="#about" class="hover:text-primary transition-colors duration-300">关于我们</a>
+      <button class="btn-hover mt-6 px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium">
+        分享瞬间
+      </button>
+    </div>
+  </div>
+  
+  <!-- 英雄区 -->
+  <header class="pt-24 pb-16 md:py-32 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-12 md:mb-0">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          捕捉<span class="gradient-text">美好瞬间</span><br>创造永恒记忆
+        </h1>
+        <p class="text-gray-600 text-lg mb-8 max-w-lg">
+          叩魔平台让您能够分享生活中的精彩时刻，将平凡变成非凡，留住时光中的感动与惊喜。
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <button class="btn-hover px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium shadow-lg">
+            开始探索
+            <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+          <button class="btn-hover px-8 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-medium hover:border-primary">
+            <i class="fas fa-info-circle mr-2"></i>
+            了解更多
+          </button>
+        </div>
+      </div>
+      <div class="md:w-1/2">
+        <div class="relative">
+          <img src="https://source.unsplash.com/random/800x600/?moments,happiness" alt="美好瞬间" class="rounded-2xl shadow-2xl">
+          <div class="absolute -bottom-5 -right-5 bg-white p-4 rounded-lg shadow-lg">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-heart text-primary"></i>
+              <span class="font-bold">2.5k+</span>
+              <span class="text-gray-500">今日瞬间</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- 特色部分 -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">为什么选择<span class="gradient-text">叩魔瞬间</span></h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">我们提供独特的视觉体验，让每一个瞬间都变得特别而难忘</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 特色 1 -->
+        <div class="card-hover bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <div class="w-14 h-14 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+            <i class="material-icons text-3xl text-primary">camera_alt</i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">高清晰度</h3>
+          <p class="text-gray-600">支持4K超高清画质，让每一个细节都清晰可见，完美呈现每一个精彩瞬间。</p>
+        </div>
+        
+        <!-- 特色 2 -->
+        <div class="card-hover bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <div class="w-14 h-14 bg-secondary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+            <i class="material-icons text-3xl text-secondary">brush</i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">艺术滤镜</h3>
+          <p class="text-gray-600">提供上百种专业滤镜效果，一键将普通照片转化为艺术作品，展现不同风格和情绪。</p>
+        </div>
+        
+        <!-- 特色 3 -->
+        <div class="card-hover bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <div class="w-14 h-14 bg-purple-500 bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+            <i class="material-icons text-3xl text-purple-500">share</i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">即时分享</h3>
+          <p class="text-gray-600">一键分享到各大社交平台，与朋友、家人和全世界分享您的精彩瞬间和创意作品。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 精彩瞬间 -->
+  <section id="moments" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold">
+          <span class="gradient-text">精彩瞬间</span>
+        </h2>
+        <div class="flex space-x-2">
+          <button class="btn-hover p-2 bg-white rounded-lg shadow hover:shadow-md">
+            <i class="material-icons">chevron_left</i>
+          </button>
+          <button class="btn-hover p-2 bg-white rounded-lg shadow hover:shadow-md">
+            <i class="material-icons">chevron_right</i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 瞬间卡片 1 -->
+        <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?nature,moment" alt="自然瞬间" class="w-full h-64 object-cover">
+            <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+              <i class="fas fa-image mr-1"></i> 风景
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">山间的日出</h3>
+            <p class="text-gray-600 mb-4">清晨的第一缕阳光穿过云层，照耀在青山之上，带来新的一天的希望。</p>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-3">
+                <img src="https://source.unsplash.com/random/100x100/?portrait" alt="用户头像" class="w-10 h-10 rounded-full">
+                <span class="font-medium">陈明</span>
+              </div>
+              <div class="flex items-center space-x-2 text-gray-500">
+                <button class="hover:text-primary">
+                  <i class="fas fa-heart"></i> 245
+                </button>
+                <button class="hover:text-primary">
+                  <i class="fas fa-comment"></i> 18
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 瞬间卡片 2 -->
+        <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?city,urban" alt="城市瞬间" class="w-full h-64 object-cover">
+            <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+              <i class="fas fa-image mr-1"></i> 城市
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">城市的脉动</h3>
+            <p class="text-gray-600 mb-4">繁忙的交通、五彩斑斓的霓虹灯，城市在夜晚展现出不一样的魅力和活力。</p>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-3">
+                <img src="https://source.unsplash.com/random/100x100/?woman" alt="用户头像" class="w-10 h-10 rounded-full">
+                <span class="font-medium">林小雨</span>
+              </div>
+              <div class="flex items-center space-x-2 text-gray-500">
+                <button class="hover:text-primary">
+                  <i class="fas fa-heart"></i> 312
+                </button>
+                <button class="hover:text-primary">
+                  <i class="fas fa-comment"></i> 26
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 瞬间卡片 3 -->
+        <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?people,celebration" alt="庆祝瞬间" class="w-full h-64 object-cover">
+            <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+              <i class="fas fa-image mr-1"></i> 人物
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">欢乐的聚会</h3>
+            <p class="text-gray-600 mb-4">朋友间的欢笑、温暖的拥抱，这些简单却真挚的瞬间构成了美好的回忆。</p>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-3">
+                <img src="https://source.unsplash.com/random/100x100/?man" alt="用户头像" class="w-10 h-10 rounded-full">
+                <span class="font-medium">王浩</span>
+              </div>
+              <div class="flex items-center space-x-2 text-gray-500">
+                <button class="hover:text-primary">
+                  <i class="fas fa-heart"></i> 189
+                </button>
+                <button class="hover:text-primary">
+                  <i class="fas fa-comment"></i> 32
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-12">
+        <button class="btn-hover inline-flex items-center px-6 py-3 bg-white border border-gray-300 rounded-lg font-medium hover:border-primary">
+          查看更多 <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 作品集 -->
+  <section id="gallery" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          <span class="gradient-text">精选作品集</span>
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">探索我们用户分享的精彩瞬间，感受不同视角下的世界之美</p>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="card-hover overflow-hidden rounded-xl">
+          <img src="https://source.unsplash.com/random/600x600/?travel" alt="旅行照片" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+        </div>
+        <div class="card-hover overflow-hidden rounded-xl md:row-span-2">
+          <img src="https://source.unsplash.com/random/600x1200/?portrait" alt="人像照片" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+        </div>
+        <div class="card-hover overflow-hidden rounded-xl">
+          <img src="https://source.unsplash.com/random/600x600/?food" alt="美食照片" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+        </div>
+        <div class="card-hover overflow-hidden rounded-xl">
+          <img src="https://source.unsplash.com/random/600x600/?architecture" alt="建筑照片" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+        </div>
+        <div class="card-hover overflow-hidden rounded-xl md:col-span-2">
+          <img src="https://source.unsplash.com/random/1200x600/?landscape" alt="风景照片" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+        </div>
+        <div class="card-hover overflow-hidden rounded-xl">
+          <img src="https://source.unsplash.com/random/600x600/?animals" alt="动物照片" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 号召行动 -->
+  <section class="py-16 bg-gradient-to-r from-primary to-secondary">
+    <div class="container mx-auto px-4 text-center text-white">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">开始捕捉您的美好瞬间</h2>
+      <p class="max-w-2xl mx-auto mb-8 text-white text-opacity-90">加入叩魔平台，记录生活中的每一个精彩时刻，留住那些弥足珍贵的记忆</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button class="btn-hover px-8 py-3 bg-white text-primary rounded-lg font-medium shadow-lg">
+          免费注册
+        </button>
+        <button class="btn-hover px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-medium">
+          了解更多
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 关于我们 -->
+  <section id="about" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/2">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            关于<span class="gradient-text">叩魔瞬间</span>
+          </h2>
+          <p class="text-gray-600 mb-6">
+            叩魔瞬间创立于2023年，致力于为用户提供一个记录和分享生活精彩瞬间的平台。我们相信，每一个平凡的瞬间都可能孕育着无限的美好，通过我们的平台，这些瞬间能够被保存、分享和传递，为生活增添更多色彩。
+          </p>
+          <p class="text-gray-600 mb-6">
+            我们的使命是让每个人都能轻松记录生活中的美好，通过先进的技术和创新的功能，我们不断探索如何让用户更好地捕捉、编辑和分享那些值得珍藏的时刻。
+          </p>
+          
+          <div class="flex items-center gap-6 mb-8">
+            <div>
+              <h4 class="font-bold text-2xl text-primary">100万+</h4>
+              <p class="text-gray-500">活跃用户</p>
+            </div>
+            <div>
+              <h4 class="font-bold text-2xl text-secondary">50万+</h4>
+              <p class="text-gray-500">每日瞬间</p>
+            </div>
+            <div>
+              <h4 class="font-bold text-2xl text-purple-500">30+</h4>
+              <p class="text-gray-500">服务国家</p>
+            </div>
+          </div>
+          
+          <button class="btn-hover px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium shadow-lg">
+            加入我们的团队
+            <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+        
+        <div class="md:w-1/2">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/800x600/?team,office" alt="团队照片" class="rounded-2xl shadow-xl">
+            <div class="absolute -bottom-5 -left-5 bg-white p-4 rounded-lg shadow-lg">
+              <div class="flex items-center gap-2">
+                <i class="fas fa-users text-primary"></i>
+                <span class="font-bold">50+</span>
+                <span class="text-gray-500">专业团队</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 联系订阅 -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="bg-gray-50 rounded-2xl shadow-lg p-8 md:p-12">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div class="md:w-1/2">
+            <h2 class="text-3xl font-bold mb-4">
+              订阅我们的<span class="gradient-text">每周精选</span>
+            </h2>
+            <p class="text-gray-600 mb-6">
+              获取每周精选的瞬间作品和最新的平台功能更新，不错过任何精彩内容。
+            </p>
+          </div>
+          
+          <div class="md:w-1/2">
+            <form class="flex flex-col sm:flex-row gap-3">
+              <input 
+                type="email" 
+                placeholder="输入您的邮箱地址" 
+                class="gradient-border flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:border-primary"
+              >
+              <button class="btn-hover px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium whitespace-nowrap">
+                立即订阅
+              </button>
+            </form>
+            <p class="text-gray-500 text-sm mt-3">
+              我们尊重您的隐私，绝不会将您的信息泄露给第三方。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 页脚 -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <i class="fas fa-cube text-primary text-2xl"></i>
+            <span class="text-xl font-bold gradient-text">叩魔瞬间</span>
+          </div>
+          <p class="text-gray-400 mb-6">
+            捕捉每一个值得珍藏的瞬间，创造永恒的记忆。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fab fa-weixin text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fab fa-weibo text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fab fa-instagram text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fab fa-tiktok text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h5 class="font-bold text-lg mb-6">快速链接</h5>
+          <ul class="space-y-4 text-gray-400">
+            <li><a href="#" class="hover:text-primary transition-colors">首页</a></li>
+            <li><a href="#moments" class="hover:text-primary transition-colors">精彩瞬间</a></li>
+            <li><a href="#gallery" class="hover:text-primary transition-colors">作品集</a></li>
+            <li><a href="#about" class="hover:text-primary transition-colors">关于我们</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h5 class="font-bold text-lg mb-6">支持与帮助</h5>
+          <ul class="space-y-4 text-gray-400">
+            <li><a href="#" class="hover:text-primary transition-colors">帮助中心</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">使用教程</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">常见问题</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">联系我们

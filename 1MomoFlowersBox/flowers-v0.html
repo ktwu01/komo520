@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘花卉盲盒</title>
+    <!-- 使用Tailwind CSS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <style>
+        .gift-box {
+            transition: transform 0.3s ease;
+        }
+        .gift-box:hover {
+            transform: scale(1.05);
+        }
+        .bounce {
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-pink-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-pink-600 text-center mb-8">神秘花卉盲盒</h1>
+        
+        <!-- 盲盒容器 -->
+        <div class="flex justify-center mb-8">
+            <div id="giftBox" class="gift-box bg-pink-200 p-8 rounded-lg shadow-lg cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- 花卉信息显示区域 -->
+        <div id="flowerInfo" class="hidden max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg fade-in">
+        </div>
+
+        <!-- 开启限制提示 -->
+        <div id="limitAlert" class="hidden max-w-md mx-auto mt-4 bg-yellow-50 p-4 rounded-lg text-yellow-700">
+            今天已经开启过盲盒啦~明天再来吧！
+        </div>
+
+        <!-- 历史记录 -->
+        <div class="mt-8 max-w-md mx-auto">
+            <h3 class="text-xl font-bold text-pink-600 mb-4">开启历史</h3>
+            <div id="history" class="space-y-4">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 花卉数据库
+        const flowers = [
+            {
+                id: 1,
+                name: "玫瑰",
+                latinName: "Rosa",
+                description: "玫瑰象征着爱情与浪漫,是最受欢迎的花卉之一。花朵丰满,花瓣层叠,香气醉人。",
+                rarity: "普通",
+                color: "红色",
+                meaning: "爱情、热情"
+            },
+            {
+                id: 2,
+                name: "蓝色妖姬",
+                latinName: "Rosa hybrida",
+                description: "蓝色妖姬是经过特殊处理的蓝色玫瑰,神秘优雅,代表着不可能的奇迹。",
+                rarity: "稀有",
+                color: "蓝色",
+                meaning: "神秘、奇迹"
+            },
+            {
+                id: 3,
+                name: "向日葵",
+                latinName: "Helianthus",
+                description: "向日葵总是追随着太阳,象征着忠诚与永恒。阳光般灿烂的花朵带来温暖与希望。",
+                rarity: "普通",
+                color: "黄色",
+                meaning: "忠诚、希望"
+            },
+            {
+                id: 4,
+                name: "睡莲",
+                latinName: "Nymphaea",
+                description: "睡莲生长在水中,白天绽放晚上闭合,象征着纯净与和平。",
+                rarity: "稀有",
+                color: "白色",
+                meaning: "纯净、和平"
+            },
+            {
+                id: 5,
+                name: "紫罗兰",
+                latinName: "Viola",
+                description: "紫罗兰低调而优雅,散发着淡淡的香气,象征着永恒的美丽与忠贞。",
+                rarity: "普通",
+                color: "紫色",
+                meaning: "永恒的爱"
+            }
+        ];
+
+        // 检查是否可以开启
+        function checkCanOpen() {
+            const lastOpenDate = localStorage.getItem('lastOpenDate');
+            const today = new Date().toDateString();
+            return !lastOpenDate || lastOpenDate !== today;
+        }
+
+        // 显示花卉信息
+        function showFlowerInfo(flower) {
+            const flowerInfo = document.getElementById('flowerInfo');
+            flowerInfo.innerHTML = `
+                <h2 class="text-2xl font-bold text-pink-600 mb-4">${flower.name}</h2>
+                <p class="text-gray-600 italic mb-2">${flower.latinName}</p>
+                <p class="text-gray-800 mb-4">${flower.description}</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><span class="font-bold">稀有度:</span> ${flower.rarity}</div>
+                    <div><span class="font-bold">颜色:</span> ${flower.color}</div>
+                    <div class="col-span-2"><span class="font-bold">花语:</span> ${flower.meaning}</div>
+                </div>
+            `;
+            flowerInfo.classList.remove('hidden');
+        }
+
+        // 添加到历史记录
+        function addToHistory(flower) {
+            const history = document.getElementById('history');
+            const historyItem = document.createElement('div');
+            historyItem.className = 'bg-white p-4 rounded-lg shadow fade-in';
+            historyItem.innerHTML = `
+                <h4 class="font-bold">${flower.name}</h4>
+                <p class="text-sm text-gray-600">${flower.meaning}</p>
+            `;
+            history.insertBefore(historyItem, history.firstChild);
+        }
+
+        // 开启盲盒
+        document.getElementById('giftBox').addEventListener('click', function() {
+            if (!checkCanOpen()) {
+                document.getElementById('limitAlert').classList.remove('hidden');
+                return;
+            }
+
+            // 添加开启动画
+            this.classList.add('bounce');
+            
+            // 随机选择一朵花
+            const randomFlower = flowers[Math.floor(Math.random() * flowers.length)];
+            
+            // 延迟显示结果
+            setTimeout(() => {
+                showFlowerInfo(randomFlower);
+                addToHistory(randomFlower);
+                
+                // 记录开启时间
+                localStorage.setItem('lastOpenDate', new Date().toDateString());
+                
+                // 显示限制提示
+                document.getElementById('limitAlert').classList.remove('hidden');
+            }, 1000);
+        });
+
+        // 页面加载时检查是否显示限制提示
+        if (!checkCanOpen()) {
+            document.getElementById('limitAlert').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+[submodule "HongMomoSimulator"]
+	path = HongMomoSimulator
+	url = https://github.com/kokomomo250/HongMomoSimulator.git
+	branch = main
