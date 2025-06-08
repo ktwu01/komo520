@@ -11,7 +11,13 @@ Designed for my only Momo, she will be happy seeing this.
 > [!NOTE] 
 > 手工打造: 不是全都原创哦。参考了很多大神的原创作品。详见“参考资料”这个Section。
 
----
+## 参考资料
+[AJLoveChina/loveBalloon](https://github.com/AJLoveChina/loveBalloon)
+[AJLoveChina/LoveTree](https://github.com/AJLoveChina/LoveTree)
+[wongjohn/for-my-love](https://github.com/wongjohn/for-my-love)
+[shibobo/happybirthday](https://github.com/shibobo/happybirthday)
+
+---下面是LLM基于project-analysis文件夹自动生成的介绍---
 
 ## 🌸 项目简介（About）
 
@@ -91,7 +97,3 @@ cd komo520
 > 我把一切知识都学给你看，只为逗你笑一次。
 > 愿这个网站，成为你无聊时打开的宝藏角落，
 > 也愿我们，一起继续把这片星空填满。
-
-## 参考资料
-[AJLoveChina/loveBalloon](https://github.com/AJLoveChina/loveBalloon)
-[AJLoveChina/LoveTree](https://github.com/AJLoveChina/LoveTree)
