@@ -1,6 +1,6 @@
 # 💖 Welcome to Koko & Momo’s Love Universe
 
-ktwu01.github.io/komo520/
+[ktwu01.github.io/komo520/](ktwu01.github.io/komo520/)
 
 > Designed *only* for 我的软糯甜美性感小蛋糕 —— 魔魔！
 
@@ -63,7 +63,7 @@ cd komo520
 ```
 
 也可以直接访问 GitHub Pages 地址：
-ktwu01.github.io/komo520/
+[ktwu01.github.io/komo520/](ktwu01.github.io/komo520/)
 
 ---
 
