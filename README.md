@@ -1,9 +1,10 @@
-# kokomomo250.github.io
-Designed for my only Momo, she will be happy seeing this.
+# 💖 Welcome to Koko & Momo’s Love Universe
 
-# 💖 Welcome to Momo’s Love Universe 💖
+ktwu01.github.io/komo520/
 
 > Designed *only* for 我的软糯甜美性感小蛋糕 —— 魔魔！
+
+Designed for my only Momo, she will be happy seeing this.
 
 这是一个由 **Koko** 手工打造的网站宇宙，每一个网页、每一个气球、每一个点击、每一行代码，都是我对你说的 “我爱你”。
 
@@ -53,14 +54,16 @@ Designed for my only Momo, she will be happy seeing this.
 
 这个网站是静态页面，无需额外配置：
 
+先把这个repository fork 到你自己的GitHub仓库。然后：
+
 ```bash
-git clone https://github.com/kokomomo250/kokomomo250.github.io.git
-cd kokomomo250.github.io
+git clone https://github.com/your/username/komo520.git
+cd komo520
 # 打开 index.html 或任意子目录下的 HTML 文件即可
 ```
 
 也可以直接访问 GitHub Pages 地址：
-👉 [https://kokomomo250.github.io/](https://kokomomo250.github.io/)
+ktwu01.github.io/komo520/
 
 ---
 
