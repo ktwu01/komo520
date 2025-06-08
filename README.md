@@ -12,10 +12,10 @@ Designed for my only Momo, she will be happy seeing this.
 > 手工打造: 不是全都原创哦。参考了很多大神的原创作品。详见“参考资料”这个Section。
 
 ## 参考资料
-[AJLoveChina/loveBalloon](https://github.com/AJLoveChina/loveBalloon)
-[AJLoveChina/LoveTree](https://github.com/AJLoveChina/LoveTree)
-[wongjohn/for-my-love](https://github.com/wongjohn/for-my-love)
-[shibobo/happybirthday](https://github.com/shibobo/happybirthday)
+1. [AJLoveChina/loveBalloon](https://github.com/AJLoveChina/loveBalloon)
+2. [AJLoveChina/LoveTree](https://github.com/AJLoveChina/LoveTree)
+3. [wongjohn/for-my-love](https://github.com/wongjohn/for-my-love)
+4. [shibobo/happybirthday](https://github.com/shibobo/happybirthday)
 
 ---下面是LLM基于project-analysis文件夹自动生成的介绍---
 
