@@ -8,7 +8,8 @@ Designed for my only Momo, she will be happy seeing this.
 
 这是一个由 **Koko** 手工打造的网站宇宙，每一个网页、每一个气球、每一个点击、每一行代码，都是我对你说的 “我爱你”。
 
-手工打造: 不是全都原创哦。参考了很多大神的原创作品。详见“参考资料”这个Section。
+> [!NOTE] 
+> 手工打造: 不是全都原创哦。参考了很多大神的原创作品。详见“参考资料”这个Section。
 
 ---
 
@@ -92,3 +93,5 @@ cd komo520
 > 也愿我们，一起继续把这片星空填满。
 
 ## 参考资料
+[AJLoveChina/loveBalloon](https://github.com/AJLoveChina/loveBalloon)
+[AJLoveChina/LoveTree](https://github.com/AJLoveChina/LoveTree)
