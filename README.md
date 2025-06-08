@@ -17,6 +17,7 @@ Designed for my only Momo, she will be happy seeing this.
 3. [wongjohn/for-my-love](https://github.com/wongjohn/for-my-love)
 4. [shibobo/happybirthday](https://github.com/shibobo/happybirthday)
 
+---
 ---下面是LLM基于project-analysis文件夹自动生成的介绍---
 
 ## 🌸 项目简介（About）
