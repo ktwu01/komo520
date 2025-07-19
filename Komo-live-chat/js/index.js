@@ -6,6 +6,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 (function () {
 
+    // Helper function to repeatedly remove HTML tags for robust sanitization.
+    function stripHtmlTags(input) {
+        var previous;
+        do {
+            previous = input;
+            input = input.replace(/<[^>]+>/g, "");
+        } while (input !== previous);
+        return input;
+    }
+
     var AUTHOR = {
         AUTHOR: 'author',
         ME: 'me'
@@ -92,7 +102,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 var _this3 = this;
 
                 var content = getRandomMsg(message);
-                var length = content.replace(/<[^>]+>/g, "").length;
+                var length = stripHtmlTags(content).length;
                 var isImg = /<img[^>]+>/.test(content);
                 var isTyping = length > 2 || isImg;
 

@@ -1,5 +1,6 @@
 (function () {
 
+    const sanitizeHtml = require('sanitize-html');
     const AUTHOR = {
         AUTHOR: 'author',
         ME: 'me'
@@ -84,7 +85,7 @@
             },
 
             sendFriendMsg(message, author) {
-                const content = getRandomMsg(message);
+                const content = sanitizeHtml(getRandomMsg(message));
                 const length = content.replace(/<[^>]+>/g,"").length;
                 const isImg = /<img[^>]+>/.test(content);
                 const isTyping = length > 2 || isImg;
