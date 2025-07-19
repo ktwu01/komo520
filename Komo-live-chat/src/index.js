@@ -85,8 +85,11 @@
             },
 
             sendFriendMsg(message, author) {
-                const content = sanitizeHtml(getRandomMsg(message));
-                const length = content.replace(/<[^>]+>/g,"").length;
+                const content = sanitizeHtml(getRandomMsg(message), {
+                    allowedTags: [], // Remove all HTML tags
+                    allowedAttributes: {} // Remove all attributes
+                });
+                const length = content.length;
                 const isImg = /<img[^>]+>/.test(content);
                 const isTyping = length > 2 || isImg;
 
