@@ -1,7 +1,3 @@
-/*
- * http://love.hackerzhou.me
- */
-
 // variables
 var $win = $(window);
 var clientWidth = $win.width();

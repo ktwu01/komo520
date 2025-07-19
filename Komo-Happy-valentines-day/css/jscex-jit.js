@@ -8,7 +8,7 @@
     var stringify = (typeof JSON !== "undefined" && JSON.stringify) ?
         function (s) { return JSON.stringify(s); } :
         (function () {
-            // Implementation comes from JSON2 (http://www.json.org/js.html)
+            // Implementation comes from JSON2 (https://www.json.org/js.html)
         
             var escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
             
