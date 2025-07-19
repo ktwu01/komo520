@@ -4,7 +4,7 @@
 
 ## TERMS AND CONDITIONS
 
-The contents of this repository at https://github.com/kokomomo250/kokomomo250.github.io (the "Repository") are protected by copyright law and other intellectual property laws. 
+The contents of this repository at https://github.com/ktwu01/komo520 (the "Repository") are protected by copyright law and other intellectual property laws. 
 
 **NO PERMISSIONS GRANTED**
 

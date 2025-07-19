@@ -189,21 +189,21 @@
                 <div class="cake">🎂</div>
                 <h2>叩魔一起</h2>
                 <div class="birthdate">2024-03-17</div>
-                <div class="age" id="ageMo">计算中...</div>
+                <div class="age" id="komoAge">计算中...</div>
             </div>
 
             <div class="card" id="wukemo">
                 <div class="cake">🎂</div>
                 <h2>吴可魔</h2>
                 <div class="birthdate">2024-05-07</div>
-                <div class="age" id="ageMo">计算中...</div>
+                <div class="age" id="ageWKM">计算中...</div>
             </div>
             
             <div class="card" id="wukeko">
                 <div class="cake">🎂</div>
                 <h2>吴可叩</h2>
                 <div class="birthdate">2024-05-07</div>
-                <div class="age" id="ageKo">计算中...</div>
+                <div class="age" id="ageWKK">计算中...</div>
             </div>
             
             <div class="card" id="wukeyao">
@@ -261,12 +261,14 @@
         
         // 更新年龄显示
         function updateAges() {
-            const moAge = calculateAge('2024-05-07');
-            const koAge = calculateAge('2024-05-07');
+            const komoAge = calculateAge('2024-03-17');
+            const ageWKK = calculateAge('2024-05-07');
+            const ageWKM = calculateAge('2024-05-07');
             const yaoAge = calculateAge('2024-05-22');
             
-            document.getElementById('ageMo').textContent = `${moAge.age} 岁 ${moAge.days} 天`;
-            document.getElementById('ageKo').textContent = `${koAge.age} 岁 ${koAge.days} 天`;
+            document.getElementById('komoAge').textContent = `${komoAge.age} 岁 ${komoAge.days} 天`;
+            document.getElementById('ageWKK').textContent = `${ageWKK.age} 岁 ${ageWKK.days} 天`;
+            document.getElementById('ageWKM').textContent = `${ageWKM.age} 岁 ${ageWKM.days} 天`;
             document.getElementById('ageYao').textContent = `${yaoAge.age} 岁 ${yaoAge.days} 天`;
         }
         
